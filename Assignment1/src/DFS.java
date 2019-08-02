@@ -77,7 +77,6 @@ public class DFS {
             return path;
         }
         */
-
     public void RecursionStarter()
     {
         int init = (grid.length/2);
@@ -95,7 +94,6 @@ public class DFS {
         frontier.push(startNode);
         doNodeDFS(g);
     }
-
     private void doNodeDFS(Node goal) {
         if (found == true)
         {
@@ -110,7 +108,6 @@ public class DFS {
         explored.add(cur);
         int x = cur.getPosx();
         int y = cur.getPosy();
-
         //check down
         if (y < grid[1].length - 1) {
             Node nodeNext = new Node(x,y+1, grid[x][y+1]);
@@ -125,8 +122,6 @@ public class DFS {
                         path.add(nodeNext);
                         doNodeDFS(goal);
                     }
-
-
                 }
             }
         }
@@ -148,7 +143,7 @@ public class DFS {
             }
         }
         //check right
-        if (cur.getPosy()<grid[1].length) {
+        if (cur.getPosx()<grid[1].length) {
             Node nodeNext = new Node(x + 1, y, grid[x + 1][y]);
             if (nodeNext.getWeight() > 0) {
                 System.out.println(nodeNext.toString());
@@ -163,7 +158,22 @@ public class DFS {
                 }
             }
         }
+        //check up
+        if (cur.getPosy()>0) {
+            Node nodeNext = new Node(x, y-1, grid[x][y-1]);
+            if (nodeNext.getWeight() > 0) {
+                System.out.println(nodeNext.toString());
+                if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
+                    frontier.push(nodeNext);
+                    if (!path.contains(goal))
+                    {
+                        path.add(nodeNext);
+                        doNodeDFS(goal);
+                    }
 
+                }
+            }
+        }
     }
 
 
@@ -251,7 +261,5 @@ public class DFS {
         }
         }//END OF RECURSION
         */
-
-
     }
 
