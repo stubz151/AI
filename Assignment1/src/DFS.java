@@ -109,7 +109,7 @@ public class DFS {
         int x = cur.getPosx();
         int y = cur.getPosy();
         //check down
-        if (y < grid[1].length - 1) {
+        if (y < grid[1].length) {
             Node nodeNext = new Node(x,y+1, grid[x][y+1]);
             if (nodeNext.getWeight()>0)
             {
