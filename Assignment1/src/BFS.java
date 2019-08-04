@@ -37,6 +37,7 @@ public class BFS {
         frontier.add(startNode);
         doBFS(g);
     }
+    //note this is currently not recrusive so will not have accurate path, please redo
     public void doBFS(Node goal)
     {
         while (!frontier.contains(goal)&&frontier.size()>0)
@@ -47,7 +48,7 @@ public class BFS {
         int x = cur.getPosx();
         int y = cur.getPosy();
 
-        //add left ele, add right ele, add elebelow, addeleabove
+        //add left ele, add right ele, add eleabove, addelebelow
          if (x > 0) {
              Node nodeNext = new Node(x-1, y, grid[x-1][y]);
 

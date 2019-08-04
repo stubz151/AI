@@ -17,7 +17,6 @@ public class DFS {
         path= new ArrayList<Node>();
        RecursionStarter();
     }
-
     public ArrayList<Node> getPath() {
         return path;
     }
