@@ -18,7 +18,6 @@ public class BFS {
     public ArrayList<Node> getPath() {
         return path;
     }
-
     public void RecursionStarter()
     {
         int init = (grid.length/2);
@@ -33,15 +32,17 @@ public class BFS {
         cur[1] =0;
         System.out.println("Starting cell is " + cur[0] +": "+  cur[1]);
         Node startNode =  new Node(cur[0], cur[1]);
-        path.add(startNode);
+        ArrayList<Node> pathhere= new ArrayList<>();
+        pathhere.add(startNode);
         frontier.add(startNode);
-        doBFS(g);
+        doBFS(g, pathhere);
     }
     //note this is currently not recrusive so will not have accurate path, please redo
-    public void doBFS(Node goal)
+    public void doBFS(Node goal , ArrayList<Node> pathhere)
     {
-        while (!frontier.contains(goal)&&frontier.size()>0)
-        {
+        if (pathhere.contains(goal)  || frontier.size()==0) {
+            return ;
+        }
         Node cur = frontier.remove();
         System.out.println(cur.toString());
         explored.add(cur);
@@ -50,26 +51,38 @@ public class BFS {
 
         //add left ele, add right ele, add eleabove, addelebelow
          if (x > 0) {
-             Node nodeNext = new Node(x-1, y, grid[x-1][y]);
+             Node nodeNext = new Node(x - 1, y, grid[x - 1][y]);
+             if (nodeNext.getWeight() > 0) {
+                 if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
+                     frontier.add(nodeNext);
+                     if (nodeNext.equals(goal)) {
+                         pathhere.add(nodeNext);
+                         path = pathhere;
+                         return;
+                     }
+                     if (!path.contains(goal)) {
+                         pathhere.add(nodeNext);
 
-                if (nodeNext.getWeight() > 0) {
-                    if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
-                        frontier.add(nodeNext);
-                        if (!path.contains(goal)) {
-                        path.add(nodeNext);
-                         }
-                    }
-                }
-            }
+
+                     }
+                 }
+             }
+         }
          if (x<grid.length)
          {
              Node nodeNext = new Node(x + 1, y, grid[x + 1][y]);
                 if (nodeNext.getWeight() > 0) {
                  if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
                  frontier.add(nodeNext);
+                     if (nodeNext.equals(goal)) {
+                         pathhere.add(nodeNext);
+                         path = pathhere;
+                         return;
+                     }
                      if (!path.contains(goal)) {
-                        path.add(nodeNext);
-                 }
+                         pathhere.add(nodeNext);
+
+                     }
              }
              }
          }
@@ -79,8 +92,14 @@ public class BFS {
              if (nodeNext.getWeight() > 0) {
                  if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
                      frontier.add(nodeNext);
+                     if (nodeNext.equals(goal)) {
+                         pathhere.add(nodeNext);
+                         path = pathhere;
+                         return;
+                     }
                      if (!path.contains(goal)) {
-                         path.add(nodeNext);
+                         pathhere.add(nodeNext);
+
                      }
                  }
              }
@@ -91,13 +110,19 @@ public class BFS {
              if (nodeNext.getWeight() > 0) {
                  if (!explored.contains(nodeNext) && !frontier.contains(nodeNext)) {
                      frontier.add(nodeNext);
+                     if (nodeNext.equals(goal)) {
+                         pathhere.add(nodeNext);
+                         path = pathhere;
+                         return;
+                     }
                      if (!path.contains(goal)) {
-                         path.add(nodeNext);
+                         pathhere.add(nodeNext);
                      }
                  }
              }
          }
-        }//end while
-    }
+         doBFS(goal, pathhere);
+        }
+
 
 }
